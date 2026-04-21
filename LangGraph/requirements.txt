@@ -1,0 +1,12 @@
+ langgraph
+langchain
+langchain-core
+langchain-community
+openai
+tiktoken
+python-dotenv
+pydantic
+graphviz
+langchain-ollama
+fastapi
+uvicorn
