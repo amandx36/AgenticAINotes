@@ -30,6 +30,16 @@ Benefits of using it
 4 time travel 
 
 
+Streaming in LangGraph :)   real time updates , display the output progressively , even before a complete response is ready !! 
+
+To improve  the user interface !! 
+
+
+
+
+
+
+
 2 } for resuming after the false tallernace you dont have to  invoke the grpah by start you have to start with the NONE 
 
 Time Travel” in Persistence?
