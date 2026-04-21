@@ -21,6 +21,28 @@ thread in Persistance :)
 
 
 
+
+Benefits of using it 
+
+1 Short term memeory 
+2 fault tollerance 
+3 hitl 
+4 time travel 
+
+
+2 } for resuming after the false tallernace you dont have to  invoke the grpah by start you have to start with the NONE 
+
+Time Travel” in Persistence?
+
+Time travel = the ability to go back to any previous state of your graph execution and continue from there.
+
+Think of it like:
+
+You ran your workflow → it saved checkpoints → you can rewind to any step and re-run from that point
+
+
+
+you can update the state also 
 LangGraph Persistence (Checkpointing) — Structured Notes
 📌 Overview
 Persistence in LangGraph means saving and restoring the state of an agent workflow at any point in execution.
