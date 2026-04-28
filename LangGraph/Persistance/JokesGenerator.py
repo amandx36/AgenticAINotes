@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 from typing import TypedDict
 
-from langchain_core.prompts import ChatPromptTemplate
 # now for making the graph dude 
 from langgraph.graph import StateGraph , END , START
 # now for google llm models 
@@ -10,8 +9,10 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import InMemorySaver
 
 
+# import for steaming 
+
+
 # for converting into json 
-import json
 
 load_dotenv()
 
@@ -21,6 +22,8 @@ llm = ChatGoogleGenerativeAI(
     max_tokens=None,
     timeout=None,
     max_retries=2,
+    # for enable  token level steaming 
+    streaming = True 
 )
 
 # now make the state 
@@ -35,20 +38,30 @@ class JokeState(TypedDict):
 
 def generateJoke(state: JokeState):
     prompt = f"Generate a funny joke about {state['topic']}."
-    response = llm.invoke(prompt)
+    full_response = ""
+    for chunk in llm.stream(prompt):
+        print(chunk.content,end="",flush=True)
+        full_response += chunk.content
+    
     return {
-        'joke': response.content
+        "joke":full_response
     }
 
 # now making a function for generating the  explanation 
 
 def generateExplanation(state: JokeState):
     prompt = f"Explain this joke: {state['joke']}"
-    response = llm.invoke(prompt)
+    full_response = ""
+    for chunk in llm.stream(prompt):
+        print(chunk.content,end="",flush=True)
+        full_response += chunk.content
+    
     return {
-        'explanation': response.content
+        "explanation":full_response
     }
-# now make the graph 
+
+# make the graph 
+ 
 
 graph = StateGraph(JokeState)
 
@@ -56,9 +69,9 @@ graph = StateGraph(JokeState)
 """
         Start 
           |
-        generate Joke  # with persistance 
+        generate Joke 
           |
-        generate Explanation  # with persistance 
+        generate Explanation 
           |
           END 
 
@@ -80,14 +93,16 @@ graph.add_edge('generate_Explanation',END)
 checkPointer = InMemorySaver()
 
 
-# important 
+# enable graph level streaming 
 
 workflow = graph.compile(checkpointer=checkPointer)
 
 config1 = {"configurable":{"thread_id":"1"}}
 
-result  = workflow.invoke({'topic':'pizza'},config=config1)
+for event in workflow.stream(
+    {"topic":"pizza"},
+    config = config1
+):
+    print(event)
 
-for ele in result["explanation"]:
-    
-    print(json.dumps(ele["text"],indent=2 ))
+
