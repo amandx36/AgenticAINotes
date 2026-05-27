@@ -305,16 +305,14 @@ All files are in your LangChainNotes folder:
 
 
 
-Embending model 
+Embedding model
 
-which is used  to convert string to vectors 
- 
+which is used to convert strings to vectors
 
+Tool calling
 
- Tool calling dude 
-
-    when llms or chat model use external feature like fetchng real time things and much more 
-    and used by @tool 
+    when LLMs or chat models use external features like fetching real-time data or accessing tools
+    and used by `@tool`
 
 
 

@@ -1,29 +1,35 @@
+# Remote MCP Own Client
+
+## Screenshot Explanation
 ![alt text](image-20.png)
+This image appears to show a remote MCP client or proxy configuration.
 
-To run the mcp server use this command 
+## Running the MCP Server
+Use this command to start the server over HTTP:
 
+```bash
 fastmcp run server.py --transport http --host 0.0.0.0 --port 8000
+```
 
+If transport is not explicitly specified, the default may be `stdio`.
 
-if u did not mention in which transport it is running then it runs byu default to the stdio dude 
-To debug and test what the hell is going on use the 
+## Debugging the MCP Server
+During development, use:
 
+```bash
 uv run fastmcp dev main.py
+```
 
+## Proxy Server Pattern
+A local MCP proxy server can sit between Claude Desktop and a remote MCP server.
+- Claude Desktop connects to the local MCP proxy
+- The proxy forwards requests to the remote MCP server
 
-Proxy server :) is a local mcp server lies between the claude desktop and the remote mcp 
+## MCP Client Options
+Common MCP client layers include:
+1. FastMCP Client
+2. lang-chain-mcp-adaptor (for LangChain and LangGraph integration)
+3. MCP official SDK/library
 
-and the proxy server connect to the remote mcp 
-
-claude desktop talk to local mcp 
-
-
-# Making the mcp client 
-
-1. the FastMCP Client 
-2. lang-chain-mcp-adaptor  simple + lang-chain and langGraph oriented 
-3. mcp official library 
-
-Most mcp server is manim used for the visualization 
-
-for multiple 
+## Production Insight
+For production, document the transport mode clearly and avoid implicit defaults. A proxy server is useful for local testing, debugging, and adapting remote services to tool-based agents.

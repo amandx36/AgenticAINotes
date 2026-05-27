@@ -1,101 +1,37 @@
-MCP Architecture
-![alt text](image.png)
+# MCP Introduction
 
+## What Is MCP?
+MCP is a protocol for connecting an AI host to a tool server or resource server using a common message format.
+It is designed for interoperability between the AI brain and external capabilities.
 
+## Architecture
+MCP has three layers:
+- **Data layer**: JSON-RPC 2.0 messages
+- **Transport layer**: stdio, HTTP, WebSocket, SSE
+- **Application layer**: tools, resources, prompts exposed by the server
 
+## MCP Primitives
+- **Tools**: actions the AI asks the server to perform
+- **Resources**: dynamic structured data sources the AI can read
+- **Prompts**: templated instructions that shape AI behavior
 
-The more simpler architecture  is this 
-![alt text](<WhatsApp Image 2026-05-09 at 6.16.13 PM (1).jpeg>)
+## Why JSON-RPC?
+- Lightweight
+- Bi-directional
+- Transport agnostic
+- Supports batching
+- Supports notifications
 
-PRIMITIVES IN MCP 
+## Transport Types
+### Local Server
+A local server runs on the same machine and typically communicates via stdio.
+How it works:
+1. Host launches the server subprocess.
+2. Host writes JSON-RPC messages to stdin.
+3. Server reads messages and writes responses to stdout.
 
-The things server can offer to host 
+### Remote Server
+Remote servers commonly use HTTP and SSE for streaming.
 
-Example git hub server 
-
-
-
-
-tools  :) Actions the ai ask the server to perform  
-Resource :)  Structured data sources that the ai can read    and it is dynamic in  nature 
-prompts  primptive :)   predefined prompts templated or instruction that the server offers to help shape the ai Behavious 
-
-
-The Standard operation on the Mcp server through the client is these 
-![alt text](<WhatsApp Image 2026-05-09 at 6.16.12 PM.jpeg>)
-
-
-MCP DATA  LAYER 
-
-the data layer is the language and grammer of the mcp ecosystem that everyone agrees upon to communicate 
-
-
-in the mcp JSON RPC 2.0  serve as the foundation of the data layer 
-
-java script object notation -Remote procedure call 
-
-RPC :)   RPC (Remote Procedure Call) is a protocol that allows a program to execute a procedure on another computer over a network as if it were a local function call
-
-                        json 
-                        |
-            ----------------------------
-            |                           |
-            rpc                        json 
-
-
-we can also  send the request also dude 
-in mcp for every request there is must every response 
-
-but in 
-Notification :) fire and forgot [No response u got ] [server to client]
-
-WHY JSON RPC  FOR DATA LAYER 
-
-A. Its light weight 
-
-B. support bi directional communication 
-
-C. it is transport agnostic [ operate seamlessly across different communication mediums it supports api , web sockets ]
-
-D. Support batching [handled simultaneously rather than individually]
-E. its support notification 
-
-
-Transport layer :) mechanism that moves json-rpc message the between the client and server 
-
-The choice of transport depends on the type of server 
-
-There are two types or servers 
-
-                                  Servers
-                                    | 
-                        -----------------------------
-                        |                            |
-                    Remote server               Local Server 
-
-
-Local server :) server running in the same as the host is running 
-
-if the transport layer happens between the local server called  the stdio [standard input and standard output ]
-
-Hows does the stdio works 
-1. The host launches the server as a subprocess on the same machine 
- establish parent child relationship 
-
-2. the host client writes json-rpc messages into the servers stdin 
-
-3. the server reads those messahes processes  them and writes back responese to it stdout 
-
-BENEFITS 
-
-FAST 
-SECURE 
-EASY TO IMPLEMENT 
-
-remote server :) running on  the remote server ! 
-
-THE transport which is used to communicate to the remote server that is http + sse 
-
-SSE  sse stand for the server send event and it an extension of http 
-
-sse help me in streaming and   
+## Production Insight
+MCP is useful when tools should be isolated from the host or when multiple clients need access to a shared tool service.

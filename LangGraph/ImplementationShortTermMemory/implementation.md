@@ -1,33 +1,44 @@
-for implementing the short term memory we use the 
+# Short-Term Memory Implementation
 
-1. check pointer 
-2. threads 
+## Purpose
+This note explains short-term memory handling in LangGraph workflows, focusing on checkpointing, threads, and context overflow management.
 
-see the reference 
+## Core Mechanisms
+Short-term memory often uses:
+1. Checkpointers
+2. Threads
 
-# Context OverFlow problem 
-an error that occurs when the total data (input prompt, system instructions, and generated output) exceeds a Large Language Model's (LLM) maximum token limit
+These mechanisms keep workflow state local to each user session and allow resumption after interruptions.
 
-# OverCome methods 
+## Context Overflow Problem
+Context overflow occurs when the combined prompt, system instructions, and generated output exceed the LLM token limit.
 
-1. TRiming  :) Remove the un neccessary message 
+## Overcome Methods
 
-set max token count and max token count exceed to the set remove the oldest messages 
+### 1. Trimming
+Remove unnecessary old messages when the token count is too large.
+- Set a maximum token budget.
+- Trim the oldest messages or the least relevant context.
+
 ![alt text](image.png)
 
-function  by langGraph :) trim_message 
+LangGraph may provide a `trim_message` utility to support this behavior.
 
 ![alt text](image-1.png)
 
-Flaws they delete the old messages 
-and the old messages not deleted 
-only the context is trimmed 
+### Limitations of Trimming
+- Old messages are not deleted permanently.
+- Only the working context is shortened.
 
-2. Summarization 
+### 2. Summarization
+Summarize older conversation history and keep only the compressed summary plus recent messages.
 
-:) summarise the old message and  send the latest messages  adn the old messages were deleted 
 ![alt text](image-2.png)
 
-imports 
+## Production Insight
+Use summarization to preserve semantic context without consuming unnecessary tokens. Use trimming only when summaries are unavailable or when strict budget control is required.
 
-from lang-chain.messages import RemoveMessages 
+## Example Imports
+```python
+from langchain.messages import RemoveMessages
+```

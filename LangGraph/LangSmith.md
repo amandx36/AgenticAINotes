@@ -1,5 +1,18 @@
 # Why LangSmith
-Observability is the ability to understand a system’s internal state—particularly complex, distributed applications—by analyzing its external outputs: logs, metrics, and traces
+LangSmith is an observability and experimentation platform for LLM applications.
 
-Its help us to diganoses the issue 
-             
+## Core Value
+Observability is the ability to understand complex systems by analyzing logs, metrics, traces, and runtime behavior.
+LangSmith helps diagnose issues in model-based workflows by providing traceability across prompts, responses, tool calls, and state.
+
+## Why it matters
+- Detect hallucinations
+- Compare prompt versions
+- Monitor tool usage
+- Debug workflow failures
+
+## Interview Angle
+Explain LangSmith as a specialized monitoring layer for AI applications, similar to how APM systems monitor microservices.
+
+## Production Insight
+Use LangSmith when building agentic workflows that rely on multiple model calls, tools, and external data, because it makes troubleshooting far easier.

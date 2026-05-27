@@ -1,49 +1,45 @@
-Tools which is used to add the functionality to the programs or the agntic ai
+# Tools Graph
 
+## Purpose
+This note explains the role of tool nodes and tool conditions in agentic AI graph workflows.
 
+## Architecture Role
+A tool node is the execution point where the system performs concrete actions like API calls, database queries, or tool invocations.
+It bridges reasoning nodes and external capabilities.
 
-
-                    start 
+## Diagram
+                    start
                     |
-                    chat node 
+                    chat node
                     |
             ------------------|
-            |               Tool Node                
+            |               Tool Node
             |                  |
             ---------|----------
                     |
-                    end 
+                    end
 
+## Tool Node (Clear Definition)
+A Tool Node is a processing unit in a workflow graph that:
+- encapsulates one or more tools (functions/APIs)
+- executes when triggered
+- accepts input, does work, and returns output
 
+### Key Characteristics
+- Contains predefined tools and actions
+- Executes tool logic reliably
+- Works in AI agents, LangGraph, and LangChain-style pipelines
 
+## Tool Condition (Clear Definition)
+A Tool Condition is a decision mechanism that chooses which tool to run based on input, state, or policy.
 
-🔧 Tool Node (Clear Definition)
+### Key Characteristics
+- Acts as a control layer
+- Evaluates input, context, rules, or state
+- Dynamically selects the appropriate tool
 
-A Tool Node is a processing unit (node) in a workflow/graph system that:
+## Production Insight
+Tool nodes allow an agent to adapt its workflow at runtime. Tool conditions make the graph dynamic, enabling branching and intelligent decision-making.
 
-encapsulates one or more tools (functions/APIs) and executes them when triggered.
-
-✔️ Key Characteristics
-Contains predefined tools (functions, APIs, models, etc.)
-Responsible for executing tool logic
-Takes input → processes via tool → returns output
-Often used in:
-AI agents
-Workflow engines
-LangGraph / LangChain pipelines
-
-
-
-Tool Condition (Clear Definition)
-
-A Tool Condition is a control mechanism that:
-
-decides which tool should be executed based on input, state, or logic.
-
-✔️ Key Characteristics
-Works like a decision layer
-Evaluates:
-Input
-Context/state
-Rules or conditions
-Selects the appropriate tool dynamically
+## Interview Angle
+Describe tool nodes as the parts of the graph where external actions happen, and tool conditions as the logic that routes execution.

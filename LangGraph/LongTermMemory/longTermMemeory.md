@@ -1,48 +1,54 @@
-this can be implemented using the class called BaseStore 
+# Long-Term Memory
 
-create memeory
-existing memeory search , update , delete 
+## What This File Explains
+This note explains how to build a long-term memory store for LangGraph using a vector-based persistence layer.
+
+## Memory Store Architecture
+A long-term memory store typically uses a `BaseStore` abstraction for:
+- create memory items
+- search existing memory
+- update memories
+- delete memories
+
 ![alt text](image.png)
 
-# How to implement the memory store 
+## Namespace-Based Organization
+Use namespaces to organize memories by user, session, or application domain.
+A namespace separates memory entries and avoids collisions.
 
-Creating a name space  :) to organise the memory we use the namespace 
-
-# put method :) particular namespace main new memoery create krta hai 
-nned 3 things namespace ,  key , value 
+### Put Method
+A `put` operation usually requires:
+- `namespace`
+- `key`
+- `value`
 
 ![alt text](image-1.png)
 
-But the problem is we need the specific memory 
+## Semantic Search for Retrieval
+To retrieve the right memory item, use semantic search instead of exact key matching.
+This relies on embedding models that represent text meaning in vector space.
 
-problem is solved using the semantic  search :) search basics on the meaning 
-
-How to implement the sementic search 
--> you have to use the embiding models 
-
-
-# Use The existance memory 
+## Using Existing Memory
+When a query arrives, check whether related memory already exists before creating a new entry.
 
 ![alt text](image-2.png)
 
-cannot create the new memory 
-
-
-
-# now the code for creating a new memory in the vector store 
+## Memory Creation Example
+The following screenshot likely shows code for inserting a new memory into a vector store.
 
 ![alt text](image-3.png)
 
-# Strategies for removing the duplicate data in the  database dude 
+## Duplicate Memory Handling
+To avoid duplicates:
+1. Send the new user message.
+2. Compare it against existing memories.
+3. Return a list of matches with boolean flags indicating whether each candidate is already stored.
+4. Insert only memories marked as `False`.
 
--> Send the user message 
--> send the  existing messages 
-and also give us list of memories and boolen is the extracted memory is in the memory or not [T/F]
+## Combined Workflow
+The memory workflow should support both update and create paths.
 
-iterate to the list and add the memory that has F in the list of memory 
-
-
-# combined WorkFlow 
-
-memory update and memory create 
 ![alt text](image-4.png)
+
+## Production Insight
+Long-term memory should be deduplicated and searchable by semantic similarity. Use namespaces and vector stores for scalability, and avoid storing raw unstructured data when only vector references are needed.

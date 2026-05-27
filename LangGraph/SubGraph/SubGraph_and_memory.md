@@ -1,99 +1,73 @@
+# Subgraphs and Memory
+
+## Overview
+This note explores the role of subgraphs in LangGraph and how memory interacts with nested workflows.
+
 ![alt text](image.png)
 
-# Need Of Sub-Graph
+## Why Subgraphs?
+Subgraphs let you reuse workflow logic inside a larger graph. They can be referenced by a node or embedded as a node itself.
 
 ![alt text](image-1.png)
 
-# Types of the SubGraph 
-
-1) invoke a graph from a node  :) one node is Reference  to the  other one  
-
-2) Add a graph as a node :) The node is Contain the subGraph !!  
-
+## Subgraph Types
+1. **Graph reference node**: a node that invokes another graph by reference.
+2. **Embedded subgraph node**: a node that contains a subgraph as its internal logic.
 
 ![alt text](image-2.png)
 
+## Important Links
+- LangChain Subgraphs docs: https://docs.langchain.com/oss/python/langgraph/use-subgraphs?utm_source=chatgpt.com
+- Example stream subgraph outputs: https://docs.langchain.com/oss/python/langgraph/use-subgraphs?utm_source=chatgpt.com#stream-subgraph-outputs
 
-# Important Links of Sub-Graph
+## Memory and LLMs
+LLMs do not have intrinsic memory. Memory must be built externally and supplied as context or retrieved state.
 
-https://docs.langchain.com/oss/python/langgraph/use-subgraphs?utm_source=chatgpt.com
-
-# Sample of SubGraph 
-
-https://docs.langchain.com/oss/python/langgraph/use-subgraphs?utm_source=chatgpt.com#stream-subgraph-outputs
-
-# Facts
-
-llm don't have any intrinsic memory 
-
-
-# function 
-
-y = f@(X)
-
-We have to develop the feature of the memory 
-
-# Context Window 
-
+## Context Window
 ![alt text](image-3.png)
 
-# In-Context Learning :) 
-
-
+### In-Context Learning
+In-context learning uses prompt examples or prior dialogue to teach the model within the same request.
 
 ![alt text](image-5.png)
 
-
-
-
-# The Solution Principle 01
-
-
-
+## Solution Principle
 ![alt text](image-4.png)
 
-
-
-# short term Memory :) 
+## Short-Term Memory
 ![alt text](image-6.png)
 
-# Problems with the short term memory 
+### Problems with Short-Term Memory
+1. Short-term memory is fragile and can break if the context grows too large.
+2. The context window is limited by the model's maximum token capacity.
 
-problem 1 ) this is very fragile  :) can break easily 
+### Recommended Solutions
+- Persist critical state externally in a database.
+- Trim or summarize context as needed.
 
-u can use the database that is persistance ! 
-
-problem 2 _) The context window problem 
-mazimum number of token which is used by the llm while generating the answer 
-
-The solution 
 ![alt text](image-7.png)
- 
 
-3>) short term memory is thread scoped 
-STM is thread-scoped
+## Thread Scope
+Short-term memory is usually thread-scoped.
 
-A. Loss of user continuity across conversations
-B. Learning never compounds over time
-C. Cross-thread reasoning is impossible 
+### Limitations
+- Loss of user continuity across conversations
+- Learning does not compound over time
+- Cross-thread reasoning is impossible
 
-# Solution 
-
+## Long-Term Memory
 ![alt text](image-8.png)
-# Types of long term memory 
 
-
+### Types of Long-Term Memory
 ![alt text](image-9.png)
 
-# How does the Long term memory works 
+## How Long-Term Memory Works
 ![alt text](image-10.png)
 ![alt text](image-11.png)
 ![alt text](image-12.png)
 ![alt text](image-13.png)
 
-# Famous Library 
-
-The famous for managing the memory is LangMem 
-
-and the plat-form is mem) and also the super-memory 
-and also google research paper is :) titans + meiras helping ai have long term memory 
+## Libraries and Research
+- Popular memory library: LangMem
+- Other related systems: Mem, Super-memory
+- Research: Google papers on memory for LLMs such as TITANs and MemRA
